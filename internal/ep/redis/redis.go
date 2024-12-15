@@ -12,8 +12,8 @@ import (
 
 // RedisCLient - струкутра для работы с Redis.
 type RedisClient struct {
-	redisClient 	*redis.Client
-	logger 			*zap.Logger
+	Client 	*redis.Client
+	logger 	*zap.Logger
 }
 
 // New - создает новый экземпляр клиента Redis.
@@ -35,13 +35,13 @@ func NewClient(ctx context.Context, cfg *config.Config, db int, logger *zap.Logg
 	logger.Info("Successfully connected to Redis")
 
 	return &RedisClient{
-		redisClient: 	redisClient,
-		logger: 		logger,
+		Client: redisClient,
+		logger: logger,
 	}, nil
 }
 
 // Close - закрытие соединения с Redis.
 func (c *RedisClient) Close() error {
 	c.logger.Info("Closing Redis connection")
-	return c.redisClient.Close()
+	return c.Client.Close()
 }

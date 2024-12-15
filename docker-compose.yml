@@ -24,6 +24,24 @@ services:
     - CLICKHOUSE_DB=default
     volumes:
       - clickhouse-data:/var/lib/clickhouse
+    healthcheck:
+      test: ["CMD", "clickhouse-client", "--host=localhost", "--query=SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  migrate:
+    image: migrate/migrate
+    container_name: migrate
+    networks:
+      - common-network
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    volumes:
+      - ./migrations:/migrations
+    entrypoint: [ "/bin/sh", "-c", "migrate -path=/migrations -database 'clickhouse://default:@clickhouse:9000/default' up" ]
 
   analytics-service:
     build:

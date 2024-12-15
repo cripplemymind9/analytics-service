@@ -11,7 +11,7 @@ import (
 
 // ClickhouseClient - структура для работы с ClickHouse.
 type ClickhouseClient struct {
-	db 		*sql.DB
+	Db 		*sql.DB
 	logger 	*zap.Logger
 }
 
@@ -33,13 +33,13 @@ func NewClient(cfg *config.Config, logger *zap.Logger) (*ClickhouseClient, error
 	}
 	logger.Info("Successfully connected to ClickHouse", zap.String("dsn", dsn))
 
-	return &ClickhouseClient{db: db, logger: logger}, nil
+	return &ClickhouseClient{Db: db, logger: logger}, nil
 }
 
 // Close - метод для закрытия соединения с ClickHouse.
 func (c *ClickhouseClient) Close() error {
 	c.logger.Info("Closing ClickHouse connection")
-	if err := c.db.Close(); err != nil {
+	if err := c.Db.Close(); err != nil {
 		c.logger.Error("Failed to close ClickHouse connection", zap.Error(err))
 		return err
 	}

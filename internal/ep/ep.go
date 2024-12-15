@@ -9,11 +9,15 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/cripplemymind9/analytics-service/internal/ep/config"
-	"github.com/cripplemymind9/analytics-service/internal/ep/clickhouse"
-	"github.com/cripplemymind9/analytics-service/internal/ep/redis"
-	"github.com/cripplemymind9/analytics-service/internal/server"
+	"github.com/cripplemymind9/analytics-service/internal/adapters/event_adapter"
 	"github.com/cripplemymind9/analytics-service/internal/adapters/health_adapter"
+	"github.com/cripplemymind9/analytics-service/internal/ep/clickhouse"
+	"github.com/cripplemymind9/analytics-service/internal/ep/config"
+	"github.com/cripplemymind9/analytics-service/internal/ep/redis"
+	"github.com/cripplemymind9/analytics-service/internal/repository/cache_impl"
+	clickhouseRepo "github.com/cripplemymind9/analytics-service/internal/repository/clickhouse"
+	"github.com/cripplemymind9/analytics-service/internal/server"
+	"github.com/cripplemymind9/analytics-service/internal/service"
 )
 
 // Run запускает основной процесс сервера, включая инициализацию всех зависимостей
@@ -34,11 +38,24 @@ func Run(ctx context.Context, cfg *config.Config, logger *zap.Logger) error {
 	defer redisClient.Close()
 	logger.Info("Redis client created successfully", zap.String("address", cfg.Redis.Port))
 
+	// Создание нового кэша
+	cache := cache_impl.New(redisClient.Client, logger)
+	logger.Info("Cache initialized successfully")
+
+	// Инициализация репоизториев
+	repositories := clickhouseRepo.NewRepositories(clickhouseClient, logger)
+	logger.Info("Repositories initialized successfully")
+
+	// Инициализация сервисов
+	services := service.New(*repositories, *cache)
+	logger.Info("Services initialized successfully")
+
 	server, err := server.New(
 		cfg,
 		logger,
 		server.WithImplementationAdapters(
 			health_adapter.New(),
+			event_adapter.New(services.Event),
 		),
 	)
 	if err != nil {

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package event;
+
+option go_package = "/event";
+
+import "google/api/annotations.proto";
+
+service EventService {
+    rpc AddEvent (AddEventRequest) returns (AddEventResponse) {
+        option (google.api.http) = {
+            post: "/add_event"
+            body: "*"
+        };
+    }
+}
+
+message AddEventRequest {
+  string user_id = 1;       // Идентификатор пользователя
+  string url = 2;           // URL, связанный с событием
+  string timestamp = 3;     // Временная метка события в формате ISO8601
+}
+
+message AddEventResponse {
+  bool success = 1;         // Успех операции
+  string message = 2;       // Сообщение о результате
+}
