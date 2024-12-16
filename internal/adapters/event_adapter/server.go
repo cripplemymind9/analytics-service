@@ -23,6 +23,10 @@ func (s *Service) RegisterServer(server *grpc.Server) {
 	pb.RegisterEventServiceServer(server, s)
 }
 
-func (s *Service) RegisterHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+func (s *Service) RegisterHandler(
+		ctx context.Context,
+		mux *runtime.ServeMux,
+		conn *grpc.ClientConn,
+	) error {
 	return pb.RegisterEventServiceHandler(ctx, mux, conn)
 }

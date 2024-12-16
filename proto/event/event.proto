@@ -9,7 +9,7 @@ import "google/api/annotations.proto";
 service EventService {
     rpc AddEvent (AddEventRequest) returns (AddEventResponse) {
         option (google.api.http) = {
-            post: "/add_event"
+            post: "/v1/add_event"
             body: "*"
         };
     }

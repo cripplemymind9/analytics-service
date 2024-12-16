@@ -1,16 +1,6 @@
 version: '3.9'
 
 services:
-  redis:
-    image: redis:latest
-    container_name: redis-server
-    ports:
-      - "${REDIS_PORT}:6379"
-    networks:
-      - common-network
-    volumes:
-      - redis-data:/data
-
   clickhouse:
     image: yandex/clickhouse-server:latest
     container_name: clickhouse-server
@@ -32,7 +22,7 @@ services:
       start_period: 10s
 
   migrate:
-    image: migrate/migrate
+    image: migrate/migrate:v4.15.2
     container_name: migrate
     networks:
       - common-network
@@ -53,12 +43,12 @@ services:
     networks:
       - common-network
     environment:
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_PORT: ${REDIS_PORT}
-      CLICKHOUSE_HOST: ${CLICKHOUSE_HOST}
-      CLICKHOUSE_PORT: ${CLICKHOUSE_PORT}
+      - CLICKHOUSE_HOST=${CLICKHOUSE_HOST}
+      - CLICKHOUSE_PORT=${CLICKHOUSE_PORT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - DEFAULT_CLIENT_ID=${DEFAULT_CLIENT_ID}
+      - ENV=${ENV}
     depends_on:
-      - redis
       - clickhouse
     command: ["dockerize", "-wait", "tcp://clickhouse-server:9000", "-timeout", "30s", "./main"]
 
@@ -67,6 +57,4 @@ networks:
     driver: bridge
 
 volumes:
-  redis-data:
   clickhouse-data:
-  

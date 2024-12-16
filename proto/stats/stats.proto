@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package stats;
+
+option go_package = "/stats";
+
+import "google/api/annotations.proto";
+
+service StatsService {
+  rpc GetStats(GetStatsRequest) returns (GetStatsResponse) {
+    option (google.api.http) = {
+      post: "/v1/get_stats"
+      body: "*"
+    };
+  }
+}
+
+message GetStatsRequest {
+  string from = 1; // начало периода, ISO8601
+  string to = 2;   // конец периода, ISO8601
+}
+
+message GetStatsResponse {
+  int32 unique_users = 1; // количество уникальных пользователей
+  int32 total_events = 2; // общее количество событий
+
+  // Список самых посещаемых URL
+  repeated MostVisitedUrl most_visited_urls = 3;
+}
+
+message MostVisitedUrl {
+  string url = 1;   // URL-адрес
+  int32 count = 2;  // количество посещений
+}
