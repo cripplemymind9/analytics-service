@@ -38,9 +38,9 @@ func NewClient(cfg *config.Config, logger *zap.Logger) (*ClickhouseClient, error
 
 // Close - метод для закрытия соединения с ClickHouse.
 func (c *ClickhouseClient) Close() error {
-	c.logger.Info("Closing ClickHouse connection")
+	c.logger.Info("closing ClickHouse connection")
 	if err := c.Db.Close(); err != nil {
-		c.logger.Error("Failed to close ClickHouse connection", zap.Error(err))
+		c.logger.Error("failed to close ClickHouse connection", zap.Error(err))
 		return err
 	}
 

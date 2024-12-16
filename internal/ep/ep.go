@@ -73,11 +73,11 @@ func Run(
 	case err = <-serverErrors:
 		return fmt.Errorf("gRPC server encountered an error: %w", err)
 	case sig := <-quit:
-		logger.Warn("Termination signal received", zap.String("signal", sig.String()))
+		logger.Warn("termination signal received", zap.String("signal", sig.String()))
 	}
 
 	// Корректное завершение работы gRPC сервера.
-	logger.Info("Shutting down gRPC server gracefully...")
+	logger.Info("shutting down gRPC server gracefully...")
 	server.Stop()
 	logger.Info("gRPC server stopped")
 	return nil

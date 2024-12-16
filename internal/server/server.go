@@ -70,7 +70,7 @@ func (s *Server) Start(ctx context.Context) error {
 	// Регистрация адаптеров
 	for _, v := range s.adapters {
 		v.RegisterServer(s.grpcServer)
-		s.logger.Info("Registered gRPC handler", zap.String("adapter", fmt.Sprintf("%T", v)))
+		s.logger.Info("registered gRPC handler", zap.String("adapter", fmt.Sprintf("%T", v)))
 	}
 
 	// Включаем поддержку ReflectionAPI для gRPC сервера.
