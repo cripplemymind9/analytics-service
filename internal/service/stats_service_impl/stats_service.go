@@ -38,13 +38,11 @@ func (s *StatsService) GetStats(
 		return nil, fmt.Errorf("invalid 'to' parameter: %w", err)
 	}
 
-	// Полученеи данных из репоизтория.
 	statsData, err := s.statsRepo.GetStats(ctx, formattedFromTime, formattedToTime)
 	if err != nil {
 		return nil, fmt.Errorf("repository get stats: %w", err)
 	}
 
-	// Формирование ответа.
 	response := &stats.GetStatsResponse{
 		UniqueUsers: int32(statsData.UniqueUsers),
 		TotalEvents: int32(statsData.TotalEvents),

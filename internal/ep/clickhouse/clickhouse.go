@@ -18,7 +18,12 @@ type ClickhouseClient struct {
 
 // New - создаёт новый клиент для работы с ClickHouse.
 func NewClient(cfg *config.Config, logger *zap.Logger) (*ClickhouseClient, error) {
-	dsn := fmt.Sprintf("clickhouse://default:@%s:%s?database=%s", cfg.ClickHouse.Host, cfg.ClickHouse.Port, cfg.ClickHouse.Database)
+	dsn := fmt.Sprintf(
+		"clickhouse://default:@%s:%s?database=%s",
+		cfg.ClickHouse.Host,
+		cfg.ClickHouse.Port,
+		cfg.ClickHouse.Database,
+	)
 
 	db, err := sql.Open("clickhouse", dsn)
 	if err != nil {

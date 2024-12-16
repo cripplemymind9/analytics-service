@@ -9,7 +9,10 @@ import (
 	"github.com/cripplemymind9/analytics-service/pkg/pb/event"
 )
 
-func (s *Service) AddEvent(ctx context.Context, req *event.AddEventRequest) (*event.AddEventResponse, error) {
+func (s *Service) AddEvent(
+	ctx context.Context,
+	req *event.AddEventRequest,
+) (*event.AddEventResponse, error) {
 	if req.UserId == "" || req.Url == "" || req.Timestamp == "" {
 		return nil, status.Error(codes.InvalidArgument, "All fields (user_id, url, timestamp) are required")
 	}

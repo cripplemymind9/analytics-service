@@ -27,8 +27,7 @@ func Run(
 	ctx context.Context,
 	cfg *config.Config,
 	logger *zap.Logger,
-	) error {
-		
+) error {
 	// Инициализация клиента Clickhouse.	
 	clickhouseClient, err := clickhouse.NewClient(cfg, logger)
 	if err != nil {

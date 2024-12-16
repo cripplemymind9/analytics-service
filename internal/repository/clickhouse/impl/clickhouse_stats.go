@@ -26,7 +26,7 @@ func (r *StatsRepo) GetStats(
 	ctx context.Context,
 	fromTime,
 	toTime string,
-	) (*models.StatsData, error) {
+) (*models.StatsData, error) {
 	// Запрос на получение уникальных пользователей и количества событий
 	statsQuery := `
 		SELECT 

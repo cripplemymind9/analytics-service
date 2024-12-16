@@ -10,11 +10,12 @@ import (
 )
 
 func (s *Service) GetStats(
-		ctx context.Context,
-		req *stats.GetStatsRequest,
-	) (*stats.GetStatsResponse, error) {
+	ctx context.Context,
+	req *stats.GetStatsRequest,
+) (*stats.GetStatsResponse, error) {
 	if req.GetFrom() == "" || req.GetTo() == "" {
-		return nil, status.Errorf(codes.InvalidArgument, "'from' and 'to' parameters cannot be empty")
+		return nil, status.Errorf(
+			codes.InvalidArgument, "'from' and 'to' parameters cannot be empty")
 	}
 
 	response, err := s.svc.GetStats(ctx, req)

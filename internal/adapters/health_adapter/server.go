@@ -25,6 +25,6 @@ func (s *Service) RegisterHandler(
 	ctx context.Context,
 	mux *runtime.ServeMux,
 	conn *grpc.ClientConn,
-	) error {
+) error {
 	return pb.RegisterHealthServiceHandler(ctx, mux, conn)
 }
