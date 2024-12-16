@@ -3,9 +3,9 @@ package clickhouse
 import (
 	"go.uber.org/zap"
 
-	impl "github.com/cripplemymind9/analytics-service/internal/repository/clickhouse/impl"
-	"github.com/cripplemymind9/analytics-service/internal/interfaces/repo/clickhouse/clickhouse_event"
 	"github.com/cripplemymind9/analytics-service/internal/ep/clickhouse"
+	"github.com/cripplemymind9/analytics-service/internal/interfaces/repo/clickhouse/clickhouse_event"
+	impl "github.com/cripplemymind9/analytics-service/internal/repository/clickhouse/impl"
 )
 
 type Repositories struct {

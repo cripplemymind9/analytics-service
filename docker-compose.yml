@@ -5,7 +5,7 @@ services:
     image: redis:latest
     container_name: redis-server
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:6379"
     networks:
       - common-network
     volumes:
@@ -15,7 +15,7 @@ services:
     image: yandex/clickhouse-server:latest
     container_name: clickhouse-server
     ports:
-      - "9000:9000"
+      - "${CLICKHOUSE_PORT}:9000"
     networks:
       - common-network
     environment:
@@ -53,10 +53,10 @@ services:
     networks:
       - common-network
     environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      CLICKHOUSE_HOST: clickhouse
-      CLICKHOUSE_PORT: 9000
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      CLICKHOUSE_HOST: ${CLICKHOUSE_HOST}
+      CLICKHOUSE_PORT: ${CLICKHOUSE_PORT}
     depends_on:
       - redis
       - clickhouse
@@ -69,3 +69,4 @@ networks:
 volumes:
   redis-data:
   clickhouse-data:
+  

@@ -2,11 +2,11 @@ package event_service_impl
 
 import (
 	"context"
-	"time"
 	"fmt"
+	"time"
 
-	"github.com/cripplemymind9/analytics-service/internal/interfaces/repo/clickhouse/clickhouse_event"
 	"github.com/cripplemymind9/analytics-service/internal/interfaces/repo/cache/cache_event"
+	"github.com/cripplemymind9/analytics-service/internal/interfaces/repo/clickhouse/clickhouse_event"
 	"github.com/cripplemymind9/analytics-service/internal/interfaces/service/event_service"
 	"github.com/cripplemymind9/analytics-service/pkg/pb/event"
 )
@@ -14,13 +14,13 @@ import (
 var _ event_service.Event = (*EventService)(nil)
 
 type EventService struct {
-	eventRepo clickhouse_event.Event
+	eventRepo  clickhouse_event.Event
 	eventCache cache_event.Event
 }
 
 func New(eventRepo clickhouse_event.Event, eventCache cache_event.Event) event_service.Event {
 	return &EventService{
-		eventRepo: eventRepo,
+		eventRepo:  eventRepo,
 		eventCache: eventCache,
 	}
 }

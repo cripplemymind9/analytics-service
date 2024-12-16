@@ -2,32 +2,32 @@ package gateway
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 	"time"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"google.golang.org/protobuf/encoding/protojson"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"go.uber.org/zap"
+	"google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/cripplemymind9/analytics-service/internal/server/adapter"
 )
 
 // Структура HTTP Gateway.
 type Gateway struct {
-	logger			*zap.Logger
-	adapters		[]adapter.ImplementationAdapter
-	gatewayMux		*http.ServeMux
+	logger     *zap.Logger
+	adapters   []adapter.ImplementationAdapter
+	gatewayMux *http.ServeMux
 }
 
 // New - создает новый экземпляр Gateway.
 func New(logger *zap.Logger, adapters []adapter.ImplementationAdapter) *Gateway {
 	return &Gateway{
-		logger: 		logger,
-		adapters: 		adapters,
-		gatewayMux: 	http.NewServeMux(),
+		logger:     logger,
+		adapters:   adapters,
+		gatewayMux: http.NewServeMux(),
 	}
 }
 
@@ -56,7 +56,7 @@ func (g *Gateway) Start(ctx context.Context, httpAddress, grpcAddress string) er
 		defaultMarshallerOption,
 	}
 
-	gwmux := runtime.NewServeMux( opts... )
+	gwmux := runtime.NewServeMux(opts...)
 
 	// Решистрируем обработчики из списка адаптеров
 	for _, impl := range g.adapters {

@@ -55,7 +55,7 @@ type (
 // GetConfigFromEnv загружает конфигурации из .env файла и переменных окружения
 func GetConfigFromEnv() (*Config, error) {
 	if err := godotenv.Load(); err != nil {
-		log.Printf("Не удалось загрузить .env файл: %s\n", err.Error())
+		log.Printf("Failed to load the .env file: %s\n", err.Error())
 	}
 
 	cfg := &Config{}
