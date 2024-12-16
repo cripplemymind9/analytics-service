@@ -23,9 +23,9 @@ func NewStatsRepo(ch *clickhouse.ClickhouseClient, logger *zap.Logger) *StatsRep
 }
 
 func (r *StatsRepo) GetStats(
-		ctx context.Context,
-		fromTime,
-		toTime string,
+	ctx context.Context,
+	fromTime,
+	toTime string,
 	) (*models.StatsData, error) {
 	// Запрос на получение уникальных пользователей и количества событий
 	statsQuery := `

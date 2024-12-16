@@ -21,11 +21,9 @@ func NewEventRepo(ch *clickhouse.ClickhouseClient, logger *zap.Logger) *EventRep
 }
 
 func (r *EventRepo) AddEvent(
-		ctx context.Context,
-		userId,
-		url,
-		timestamp string,
+	ctx context.Context, userId, url, timestamp string,
 	) error {
+
 	tx, err := r.ch.Db.BeginTx(ctx, nil)
 	if err != nil {
 		r.logger.Error("failed to begin transaction", zap.Error(err))

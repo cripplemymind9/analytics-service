@@ -22,9 +22,9 @@ func (s *Service) RegisterServer(server *grpc.Server) {
 }
 
 func (s *Service) RegisterHandler(
-		ctx context.Context,
-		mux *runtime.ServeMux,
-		conn *grpc.ClientConn,
+	ctx context.Context,
+	mux *runtime.ServeMux,
+	conn *grpc.ClientConn,
 	) error {
 	return pb.RegisterHealthServiceHandler(ctx, mux, conn)
 }

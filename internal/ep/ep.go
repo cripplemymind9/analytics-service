@@ -24,9 +24,9 @@ import (
 
 // Run запускает основной процесс сервера, включая инициализацию всех зависимостей.
 func Run(
-		ctx context.Context,
-		cfg *config.Config,
-		logger *zap.Logger,
+	ctx context.Context,
+	cfg *config.Config,
+	logger *zap.Logger,
 	) error {
 		
 	// Инициализация клиента Clickhouse.	

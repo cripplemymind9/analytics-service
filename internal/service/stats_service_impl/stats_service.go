@@ -24,8 +24,8 @@ func New(statsRepo clickhouse_stats.Stats) stats_service.Stats {
 }
 
 func (s *StatsService) GetStats(
-		ctx context.Context,
-		req *stats.GetStatsRequest,
+	ctx context.Context,
+	req *stats.GetStatsRequest,
 	) (*stats.GetStatsResponse, error) {
 
 	formattedFromTime, err := parseAndFormatTime(req.From)

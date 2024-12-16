@@ -24,8 +24,8 @@ func New(eventRepo clickhouse_event.Event) event_service.Event {
 }
 
 func (s *EventService) AddEvent(
-		ctx context.Context,
-		req *event.AddEventRequest,
+	ctx context.Context,
+	req *event.AddEventRequest,
 	) error {
 	// Проверка формата времени
 	parsedTime, err := time.Parse(time.RFC3339, req.Timestamp)
