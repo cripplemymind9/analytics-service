@@ -21,7 +21,9 @@ func WithImplementationAdapters(adapters ...adapter.ImplementationAdapter) Entry
 	return option(func(o *options) { o.adapters = append(o.adapters, adapters...) })
 }
 
-func WithGrpcUnaryServerInterceptors(grpcUnaryServerInterceptors ...grpc.UnaryServerInterceptor) EntrypointOption {
+func WithGrpcUnaryServerInterceptors(
+	grpcUnaryServerInterceptors ...grpc.UnaryServerInterceptor,
+) EntrypointOption {
 	return option(func(o *options) {
 		o.grpcUnaryServerInterceptors = append(o.grpcUnaryServerInterceptors, grpcUnaryServerInterceptors...)
 	})
