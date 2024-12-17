@@ -95,8 +95,56 @@ curl -X GET "http://localhost:8080/get_stats?from=2024-12-01T00:00:00Z&to=2024-1
 }
 ```
 
+
+## Setup and Run
+
+### Prerequisites
+
+- **Go** (v1.18 or later)
+- **ClickHouse** (Running instance)
+- **Docker** and **Docker Compose** (for database migrations)
+
+### Steps
+
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
+
+2. Install dependencies:
+   ```sh
+   go mod tidy
+   ```
+
+3. Start the services (with automatic migrations):
+   ```sh
+   docker-compose up --build
+   ```
+
+   The ClickHouse database will be set up automatically, and migrations will be applied.
+
+4. Configure connection to ClickHouse in the code:
+   Update the `setupClickHouse` function with the appropriate connection details if necessary.
+
+5. Run the microservice:
+   ```sh
+   go run main.go
+   ```
+
+6. Access the endpoints at `http://localhost:8080`.
+
 ## Technologies Used
 
 - **Golang**: For building the microservice.
 - **ClickHouse**: For fast and efficient data storage and analytics.
 - **Docker** (optional): To run ClickHouse as a container.
+
+## Future Improvements
+
+- Add authentication and authorization for endpoints.
+- Add monitoring and logging for better observability.
+
+---
+
+**Author**: Egor Kutov
