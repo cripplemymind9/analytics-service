@@ -28,7 +28,7 @@ func Run(
 	cfg *config.Config,
 	logger *zap.Logger,
 ) error {
-	// Инициализация клиента Clickhouse.	
+	// Инициализация клиента Clickhouse	
 	clickhouseClient, err := clickhouse.NewClient(cfg, logger)
 	if err != nil {
 		logger.Error("failed to create ClickHouse client", zap.Error(err))
@@ -37,15 +37,15 @@ func Run(
 	defer clickhouseClient.Close()
 	logger.Info("сlickHouse client created successfully", zap.String("address", cfg.ClickHouse.Port))
 
-	// Инициализация репоизториев.
+	// Инициализация репоизториев
 	repositories := clickhouseRepo.NewRepositories(clickhouseClient, logger)
 	logger.Info("repositories initialized successfully")
 
-	// Инициализация сервисов.
+	// Инициализация сервисов
 	services := service.New(*repositories)
 	logger.Info("services initialized successfully")
 
-	// Инцииализация сервера.
+	// Инцииализация сервера
 	server, err := server.New(
 		cfg,
 		logger,
@@ -67,7 +67,7 @@ func Run(
 		serverErrors <- server.Start(ctx)
 	}()
 
-	// Ожидание ошибки сервера или сигнала завершения.
+	// Ожидание ошибки сервера или сигнала завершения
 	select {
 	case err = <-serverErrors:
 		return fmt.Errorf("gRPC server encountered an error: %w", err)
@@ -75,7 +75,7 @@ func Run(
 		logger.Warn("termination signal received", zap.String("signal", sig.String()))
 	}
 
-	// Корректное завершение работы gRPC сервера.
+	// Корректное завершение работы gRPC сервера
 	logger.Info("shutting down gRPC server gracefully...")
 	server.Stop()
 	logger.Info("gRPC server stopped")
